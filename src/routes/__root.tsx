@@ -14,7 +14,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 });
 
 function Root() {
-	console.log(config);
+
 	if (!config.constructionDisabled) {
 		return (
 			<div className="flex flex-col h-full">
