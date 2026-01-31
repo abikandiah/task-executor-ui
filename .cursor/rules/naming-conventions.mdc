@@ -1,0 +1,52 @@
+---
+description: Naming conventions for components, hooks, and folders
+globs: "**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+# Naming Conventions
+
+## Components
+
+- **PascalCase** for component names and file names: `Header.tsx`, `Footer.tsx`, `NotFound.tsx`.
+- **Default export** for page-level or layout components: `export default Header`.
+- **Named export** when re-exporting or wrapping: `export { NotFound }` in `NotFound.tsx`.
+- Barrel files use **named exports**: `export function TextLink(...)` in `components/index.tsx`.
+
+## Hooks
+
+- **camelCase** with `use` prefix: `useAuth`, `useTheme`.
+- Place in `src/hooks/` (alias `@/hooks` in components.json). One hook per file is preferred; filename can match hook name, e.g. `useTheme.ts`.
+
+## Files & Folders
+
+- **Components**: PascalCase filenames (`Header.tsx`, `NotFound.tsx`). Barrel: `index.tsx`.
+- **Routes**: TanStack Router file-based; use `__root.tsx` for root layout, `index.tsx` for `/`.
+- **Config / lib / integrations**: **kebab-case** or **lowercase** for non-component files: `root-provider.tsx`, `devtools.tsx`, `index.ts`.
+- **Folders**: lowercase, multi-word with hyphen if needed: `tanstack-query`, not `tanstackQuery`.
+
+## Types & Interfaces
+
+- **PascalCase**: `RouteLinksProps`, `LinkComponentProps`.
+- Prefer `interface` for object shapes; use `type` for unions/intersections and when extending.
+
+## Constants & Config
+
+- **camelCase** for variables: `config`, `queryClient`.
+- **UPPER_SNAKE_CASE** only for env vars (e.g. `VITE_CONSTRUCTION_DISABLED`).
+
+## Examples
+
+```tsx
+// ✅ Component file and name
+// src/components/Header.tsx
+function Header() { ... }
+export default Header;
+
+// ✅ Hook (when added)
+// src/hooks/useTheme.ts
+export function useTheme() { ... }
+
+// ✅ Integration folder
+// src/integrations/tanstack-query/root-provider.tsx
+```

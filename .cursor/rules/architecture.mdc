@@ -1,0 +1,44 @@
+---
+description: Folder structure and where logic vs UI lives
+alwaysApply: true
+---
+
+# Architecture
+
+## Folder Structure
+
+```
+src/
+  components/     # Reusable UI components
+  config/         # App config (env-derived, constants)
+  integrations/   # Third-party integrations (e.g. TanStack Query provider)
+  lib/            # Utilities (e.g. cn), shared helpers
+  routes/         # TanStack Router file-based routes
+  styles.css      # Global styles and theme variables
+  main.tsx        # App entry, router + provider setup
+  routeTree.gen.ts # Generated; do not edit
+```
+
+## Where Things Live
+
+| Concern | Location | Examples |
+|--------|----------|----------|
+| **UI components** | `src/components/` | Header, Footer, NotFound, TextLink in index |
+| **Shadcn/design-system UI primitives** | `src/components/ui/` (when added via shadcn) or use `@abumble/design-system` | Button, Card, Popover |
+| **Custom hooks** | `src/hooks/` | useTheme, useAuth (alias `@/hooks`) |
+| **Route components** | `src/routes/` | __root.tsx, index.tsx (file-based routing) |
+| **App config** | `src/config/` | config.index.ts (e.g. constructionDisabled) |
+| **Integrations** | `src/integrations/<name>/` | tanstack-query: root-provider, devtools |
+| **Shared utils** | `src/lib/` | utils.ts (cn), other pure helpers |
+| **Global styles / theme** | `src/styles.css` | CSS variables, Tailwind @theme |
+
+## Logic vs UI
+
+- **Hooks**: Put reusable stateful logic and side effects in `src/hooks/`. Keep route/page logic in the route file or a co-located hook if it’s only used there.
+- **Components**: Prefer presentational components in `components/`; they receive data and callbacks via props. If a component needs data fetching or complex state, use a hook (from `@/hooks` or local) and keep the component focused on rendering.
+- **Integrations**: Provider setup and devtools live in `integrations/`; the app wires them in `main.tsx` and route context (e.g. root route context for queryClient).
+
+## Path Aliases
+
+- `@/` → `src/` (e.g. `@/components/Header`, `@/config`, `@/lib/utils`, `@/hooks`).
+- Use these in imports instead of relative paths when crossing top-level folders.

@@ -1,0 +1,39 @@
+---
+description: Responsiveness, theme variables, and common component patterns
+globs: "**/*.tsx, **/*.css, **/styles.css"
+alwaysApply: false
+---
+
+# UI Patterns
+
+## Responsiveness
+
+- **Mobile-first**: Use Tailwind breakpoints as min-width. Base styles apply to mobile; override with `sm:`, `md:`, `lg:` as needed.
+- **Viewport**: `index.html` includes `<meta name="viewport" content="width=device-width, initial-scale=1.0" />`.
+- **Common pattern**: Toggle visibility by breakpoint (e.g. hamburger on small, nav on medium+):
+  - `md:hidden` for mobile-only (e.g. hamburger).
+  - `hidden md:block` for desktop-only (e.g. nav links).
+- **Layout**: Use flexbox with responsive direction/alignment: e.g. `flex flex-col md:items-end items-center gap-1` for stacking on mobile, aligned end on desktop.
+
+## Theme Variables
+
+- **Defined in** `src/styles.css`.
+- **Light**: `:root` holds semantic variables (e.g. `--background`, `--foreground`, `--primary`, `--radius`, `--border`, chart/sidebar tokens).
+- **Dark**: `.dark` class overrides the same variables for dark mode. Dark mode is class-based (`tailwind.config.js`: `darkMode: ["class"]`).
+- **Tailwind v4**: `@theme inline { ... }` maps CSS variables to Tailwind tokens:
+  - Colors: `--color-background`, `--color-primary`, etc. (from `var(--background)`, `var(--primary)`).
+  - Radius: `--radius-sm`, `--radius-md`, `--radius-lg`, `--radius-xl` (derived from `--radius`).
+- **Use in components**: Prefer Tailwind classes that reference these (e.g. `bg-background`, `text-foreground`, `rounded-lg`) so light/dark stay consistent. Use design-system or shadcn components that consume the same variables.
+
+## Common Component Patterns
+
+- **Class merging**: Use `cn()` from `@/lib/utils` or `@abumble/design-system/utils` to merge Tailwind classes and support overrides: `className={cn("base-styles", className)}`.
+- **Spreading props**: When wrapping a primitive or design-system component, spread rest props and forward `className`: e.g. `function TextLink({ className, ...props }: LinkComponentProps) { return <Link {...props} className={cn("text-link", className)} /> }`.
+- **Composition**: Use design-system primitives (e.g. Popover, PopoverTrigger, PopoverContent) for behavior; style with Tailwind and theme variables.
+- **Routing**: Use TanStack Router’s `Link` with `activeProps` for active state (e.g. `activeProps={{ className: 'nav-link-active' }}`). Prefer `Link` from `@tanstack/react-router` for in-app navigation.
+- **Barrel exports**: `components/index.tsx` exports shared pieces (e.g. TextLink) so other components can import from `@/components` or `./index`.
+
+## Layout Conventions
+
+- Root layout: `flex flex-col h-full`; main content area grows with `flex-grow` or fixed header + main; footer at bottom with `mt-auto` when using flex column.
+- Page padding: Use consistent spacing (e.g. `px-3`, `mt-10`) on main content; match in header/footer where appropriate.

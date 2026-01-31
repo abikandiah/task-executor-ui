@@ -1,0 +1,49 @@
+---
+description: Tech stack and library versions for task-executor-ui
+alwaysApply: true
+---
+
+# Tech Stack
+
+**Use latest stable versions** for all dependencies. Do not copy pinned versions from older projects; install or upgrade to current stable so new projects stay up to date.
+
+## Core
+
+| Technology | Notes |
+|------------|--------|
+| **React** | React with react-dom; use latest stable. |
+| **TypeScript** | Strict mode, ES2022 target. Use latest stable. |
+| **Vite** | Build tool and dev server. Use latest stable. |
+| **Tailwind CSS** | Use Tailwind v4 via `@tailwindcss/vite`; use Tailwind v4 syntax. |
+
+## UI & Styling
+
+| Library | Usage |
+|---------|--------|
+| **@abumble/design-system** | Primary UI components (Popover, NotFound, UnderConstruction, utils, types). Use latest compatible version. |
+| **Shadcn (new-york)** | Style: `new-york`, baseColor: `zinc`, cssVariables: true. Add components with `pnpx shadcn@latest add <component>`. |
+| **Radix** | Via design-system/shadcn; not installed directly. |
+| **class-variance-authority (cva)** | For component variants. |
+| **clsx** | Class name composition. |
+| **tailwind-merge** | Merge Tailwind classes (use `cn()` from `@/lib/utils` or design-system). |
+| **lucide-react** | Icons (components.json: iconLibrary: "lucide"). |
+| **tw-animate-css** | Animations. |
+
+## Data & Routing
+
+| Library | Notes |
+|---------|--------|
+| **@tanstack/react-query** | Use latest stable. |
+| **@tanstack/react-router** | Use latest stable. |
+| **@tanstack/router-plugin** | Vite plugin; match router major. |
+
+## Tooling
+
+- **ESLint**: @tanstack/eslint-config (latest).
+- **Prettier**: Latest stable. Prefer: semi: false, singleQuote: true, trailingComma: "all", useTabs: true.
+- **Vitest** + **@testing-library/react** for tests (latest stable).
+
+## Adding UI Components
+
+- Prefer **@abumble/design-system** when a component exists there.
+- For net-new shadcn-style components, use: `pnpx shadcn@latest add <component>` so the correct Tailwind v4 + aliases are used.

@@ -1,7 +1,20 @@
-# shadcn instructions
+# Task Executor UI – Cursor Rules
 
-Use the latest version of Shadcn to install new components, like this command to add a button component:
+Project coding standards are documented in `.cursor/rules/` as `.mdc` files. Use them when editing code or adding features.
+
+## Quick Reference
+
+- **Tech stack & versions**: `.cursor/rules/tech-stack.mdc`
+- **Naming (components, hooks, folders)**: `.cursor/rules/naming-conventions.mdc`
+- **Architecture & folder structure**: `.cursor/rules/architecture.mdc`
+- **UI (responsiveness, theme, patterns)**: `.cursor/rules/ui-patterns.mdc`
+
+## Shadcn
+
+Use the latest Shadcn CLI to add new components:
 
 ```bash
 pnpx shadcn@latest add button
 ```
+
+Replace `button` with the component name you need. This keeps Tailwind v4, aliases, and design-system usage consistent.
